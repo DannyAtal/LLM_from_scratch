@@ -28,7 +28,7 @@ n_embd = 2000
 n_head = 8
 n_layer = 50
 dropout = 0.2
-gradient_accumulation_steps = 4
+gradient_accumulation_steps = 4  # Add this line
 
 print(device)
 
@@ -238,9 +238,7 @@ def main(local_rank, world_size, args):
         optimizer.zero_grad(set_to_none=True)
 
     with open('model-01.pkl', 'wb') as f:
-        # Save the model state_dict
-        torch.save(model.state_dict(), f)
-
+        pickle.dump(model, f)
         print('model saved')
 
 if __name__ == "__main__":
