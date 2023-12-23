@@ -28,7 +28,7 @@ n_embd = 2000
 n_head = 8
 n_layer = 50
 dropout = 0.2
-gradient_accumulation_steps = 4  # Add this line
+gradient_accumulation_steps = 4
 
 print(device)
 
