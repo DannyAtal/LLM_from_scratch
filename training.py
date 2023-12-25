@@ -43,7 +43,7 @@ decode = lambda l: ''.join([int_to_string[i] for i in l])
 
 # memory map for using small snippets of text from a single file of any size
 def get_random_chunk(split):
-    filename = "openwebtext/train_split.txt" if split == 'train' else "openwebtext/val_split.txt"
+    filename = "{yourextracteddatapath}/output_train.txt" if split == 'train' else "{yourextracteddatapath}/output_val.txt"
     with open(filename, 'rb') as f:
         with mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ) as mm:
             # Determine the file size and a random position to start reading
@@ -224,8 +224,12 @@ class GPTLanguageModel(nn.Module):
             index = torch.cat((index, index_next), dim=1) # (B, T+1)
         return index
 
+def count_parameters(model):
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+        
 model = GPTLanguageModel(vocab_size)
-# print('loading model parameters...')
+print('loading model parameters...')
+print(f'Number of parameters in the model: {count_parameters(model)}')
 # with open('model-01.pkl', 'rb') as f:
 #     model = pickle.load(f)
 # print('loaded successfully!')
