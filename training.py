@@ -19,18 +19,18 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 batch_size = int(args.batch_size)
 block_size = 128
-max_iters = 200
+max_iters = 5000
 learning_rate = 3e-4
 eval_iters = 100
 n_embd = 384
-n_head = 1
-n_layer = 1
+n_head = 8
+n_layer = 8
 dropout = 0.2
 
 print(device)
 
 chars = ""
-with open("openwebtext/vocab.txt", 'r', encoding='utf-8') as f:
+with open("{yourextracteddatapath}/vocab.txt", 'r', encoding='utf-8') as f:
         text = f.read()
         chars = sorted(list(set(text)))
         
@@ -224,7 +224,7 @@ class GPTLanguageModel(nn.Module):
             index = torch.cat((index, index_next), dim=1) # (B, T+1)
         return index
 
-model = GPTLanguageModel()
+model = GPTLanguageModel(vocab_size)
 # print('loading model parameters...')
 # with open('model-01.pkl', 'rb') as f:
 #     model = pickle.load(f)
